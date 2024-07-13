@@ -1,0 +1,60 @@
+body {
+
+	&.wp-admin.site-health-php { /* stylelint-disable-line selector-class-pattern -- The mix of separators is due to how WP core handles body classnames.  */
+
+		.file-integrity-table {
+
+			thead,
+			tbody,
+			tfoot {
+
+				th,
+				td {
+
+					&:first-child {
+
+						text-align: center;
+						width: 60px;
+					}
+				}
+			}
+		}
+
+		.tools-email-table {
+
+			border: 0;
+			box-shadow: none;
+
+			td {
+
+				&:first-child {
+					width: 280px;
+				}
+
+				@media (max-width: 768px) {
+					display: block;
+				}
+
+			}
+
+			input {
+				width: 100%;
+			}
+
+			label {
+				display: block;
+				clear: both;
+			}
+
+		}
+
+		#site-health-mail-check,
+		#site-health-file-integrity {
+
+			margin-bottom: 15px;
+		}
+
+
+		@import "modules/diff-viewer";
+	}
+}

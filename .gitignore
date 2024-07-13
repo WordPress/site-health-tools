@@ -1,0 +1,14 @@
+.idea/
+
+node_modules/
+wordpress-coding-standards
+php-codesniffer
+vendor/
+build/
+
+.wp-env.override.json
+site-health-tools.zip
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
