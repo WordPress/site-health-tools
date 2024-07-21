@@ -1,0 +1,54 @@
+name: Coding Standards
+
+on:
+  pull_request:
+    paths:
+      - '**.php'
+      - '**.js'
+      - '**.scss'
+
+jobs:
+  phpcs:
+    name: PHP coding standards
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.1'
+          coverage: none
+          tools: composer, cs2pr
+
+      - name: Install Composer dependencies
+        run:
+          composer install --no-progress --no-ansi --no-interaction
+
+      - name: Run PHPCS
+        run: composer run automation:lint:compat | cs2pr
+
+  eslint:
+    name: JavaScript and CSS style linters
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint:js
+
+      - name: Run StyleLint
+        run: npm run lint:css

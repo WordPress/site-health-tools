@@ -1,0 +1,56 @@
+name: Build Status
+
+on:
+  push:
+    branches:
+      - trunk
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  build-plugin:
+    name: Create an installable plugin
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.1'
+          coverage: none
+          tools: composer, cs2pr
+
+      - name: Install NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
+
+      - name: Log debug information
+        run: |
+          echo "::group::PHP version"
+          php --version
+          echo "::endgroup::"
+          echo "::group::Composer version"
+          composer --version
+          echo "::endgroup::"
+          echo "::group::Node version"
+          node --version
+          echo "::endgroup::"
+          echo "::group::NPM Version"
+          npm --version
+          echo "::endgroup::"
+
+      - name: Install Composer dependencies
+        run:
+          composer install --no-progress --no-ansi --no-interaction --no-dev
+
+      - name: Install Node dependencies
+        run: npm install
+
+      - name: Build plugin
+        run: npm run build
