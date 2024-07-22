@@ -30,6 +30,9 @@ jobs:
       - name: Run PHPCS
         run: composer run automation:lint:compat | cs2pr
 
+      - name: Run PHPStan
+        run: composer run automation:phpstan | cs2pr
+
   eslint:
     name: JavaScript and CSS style linters
     runs-on: ubuntu-latest
