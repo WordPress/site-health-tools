@@ -1,0 +1,17 @@
+parameters:
+	level: 6
+
+	checkGenericClassInNonGenericObjectType: false
+
+	bootstrapFiles:
+		- tests/phpstan/bootstrap.php
+
+	excludePaths:
+		- .github
+		- build
+		- node_modules
+		- playwright-report
+		- test-results
+		- tests
+		- vendor
+
