@@ -23,7 +23,7 @@ class Transients extends Site_Health_Tool {
 		parent::__construct();
 	}
 
-	public function clear_transients() {
+	public function clear_transients() : void {
 		global $wpdb;
 
 		\check_ajax_referer( 'site-health-clear-transients' );
@@ -47,7 +47,7 @@ class Transients extends Site_Health_Tool {
 		);
 	}
 
-	public function tab_content() {
+	public function tab_content() : void {
 		global $wpdb;
 
 		// phpcs:ignore WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Direct, and uncached query is used to get the most accurate values possible.
@@ -69,7 +69,7 @@ class Transients extends Site_Health_Tool {
 				),
 				sprintf(
 					'<strong>%s</strong>',
-					\esc_html( \size_format( strlen( serialize( $transients ) ) ) )
+					\esc_html( (string) \size_format( strlen( serialize( $transients ) ) ) )
 				)
 			)
 		);

@@ -17,6 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 class Mail_Check extends Site_Health_Tool {
 
+	/**
+	 * The error object for the mail check.
+	 *
+	 * @var \WP_Error
+	 */
 	private $mail_error = null;
 
 	public function __construct() {
@@ -108,9 +113,6 @@ class Mail_Check extends Site_Health_Tool {
 		);
 
 		\wp_send_json_success( $response );
-
-		\wp_die();
-
 	}
 
 	/**
@@ -129,7 +131,7 @@ class Mail_Check extends Site_Health_Tool {
 	 *
 	 * @return void
 	 */
-	public function tab_content() {
+	public function tab_content() : void {
 		?>
 		<form action="#" id="site-health-mail-check" method="POST">
 			<table class="widefat tools-email-table">

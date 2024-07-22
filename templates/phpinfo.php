@@ -40,10 +40,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 		$phpinfo_raw = ob_get_clean();
 
 		// Extract the body of the `phpinfo()` call, to avoid all the styles they introduce.
-		preg_match_all( '/<body[^>]*>(.*)<\/body>/siU', $phpinfo_raw, $phpinfo );
+		preg_match_all( '/<body[^>]*>(.*)<\/body>/siU', (string) $phpinfo_raw, $phpinfo );
 
 		// Extract the styles `phpinfo()` creates for this page.
-		preg_match_all( '/<style[^>]*>(.*)<\/style>/siU', $phpinfo_raw, $styles );
+		preg_match_all( '/<style[^>]*>(.*)<\/style>/siU', (string) $phpinfo_raw, $styles );
 
 		// We remove various styles that break the visual flow of wp-admin.
 		$remove_patterns = array(

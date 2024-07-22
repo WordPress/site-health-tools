@@ -11,9 +11,9 @@ class Debug_Log_Viewer extends Site_Health_Tool {
 		parent::__construct();
 	}
 
-	private function read_debug_log() {
+	private function read_debug_log() : string {
 		if ( ! defined( 'WP_DEBUG_LOG' ) || false === \WP_DEBUG_LOG ) {
-			return null;
+			return '';
 		}
 
 		$logfile = \WP_DEBUG_LOG;
@@ -27,7 +27,7 @@ class Debug_Log_Viewer extends Site_Health_Tool {
 		}
 
 		if ( ! file_exists( $logfile ) ) {
-			return null;
+			return '';
 		}
 
 		$debug_log = @file_get_contents( $logfile ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- `file_get_contents` used to retrieve contents of local file.
@@ -43,7 +43,7 @@ class Debug_Log_Viewer extends Site_Health_Tool {
 		return $debug_log;
 	}
 
-	public function tab_content() {
+	public function tab_content() : void {
 		if ( ! defined( 'WP_DEBUG_LOG' ) || false === \WP_DEBUG_LOG ) {
 			printf(
 				'<p>%s</p>',

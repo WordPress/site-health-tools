@@ -16,15 +16,31 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Class Health_Check_Tools
  */
 abstract class Site_Health_Tool {
+	/**
+	 * The description for the tab.
+	 *
+	 * @var string
+	 */
 	protected $description;
+
+	/**
+	 * The label for the tab.
+	 *
+	 * @var string
+	 */
 	protected $label;
 
 	public function __construct() {
 		\add_filter( 'health_check_tools_tab', array( $this, 'tab_setup' ) );
 	}
 
-	public function tab_setup( $tabs ) {
-		if ( ! isset( $this->label ) || empty( $this->label ) ) {
+	/**
+	 * @param array<int, array<string,string>> $tabs
+	 *
+	 * @return array<int, array<string,string>>
+	 */
+	public function tab_setup( array $tabs ) : array {
+		if ( empty( $this->label ) ) {
 			return $tabs;
 		}
 
@@ -49,19 +65,19 @@ abstract class Site_Health_Tool {
 
 		$tabs[] = array(
 			'label'   => $this->label,
-			'content' => $tab_content,
+			'content' => (string) $tab_content,
 		);
 
 		return $tabs;
 	}
 
-	public function tab_content() {}
+	public function tab_content() : void {}
 
-	public function has_description() {
-		return isset( $this->description ) && ! empty( $this->description );
+	public function has_description() : bool {
+		return ! empty( $this->description );
 	}
 
-	public function get_description() {
+	public function get_description() : string {
 		return $this->description;
 	}
 }

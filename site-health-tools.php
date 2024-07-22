@@ -47,11 +47,11 @@ foreach ( $tool_files as $tool_file ) {
 /**
  * Adds the Tools tab to the Site Health page.
  *
- * @param array $tabs The tabs on the Site Health page.
+ * @param array<string, string> $tabs The tabs on the Site Health page.
  *
- * @return array
+ * @return array<string, string>
  */
-function add_tools_tab( $tabs ) {
+function add_tools_tab( array $tabs ) : array {
 	return array_merge(
 		$tabs,
 		array(
@@ -62,8 +62,12 @@ function add_tools_tab( $tabs ) {
 
 /**
  * Adds the content for the Tools tab on the Site Health page.
+ *
+ * @param string $tab The current tab being viewed.
+ *
+ * @return void
  */
-function add_tools_tab_content( $tab ) {
+function add_tools_tab_content( string $tab ) : void {
 	if ( 'tools' !== $tab ) {
 		return;
 	}
@@ -73,8 +77,10 @@ function add_tools_tab_content( $tab ) {
 
 /**
  * Enqueues the scripts and styles for the plugin.
+ *
+ * @return void
  */
-function enqueue_scripts() {
+function enqueue_scripts() : void {
 	$screen = \get_current_screen();
 
 	if ( 'tools_page_site-health' !== $screen->id && 'site-health' !== $screen->id ) {

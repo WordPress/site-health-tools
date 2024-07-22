@@ -54,9 +54,9 @@ class Files_Integrity extends Site_Health_Tool {
 	 * @uses strpos()
 	 * @uses unset()
 	 *
-	 * @return array
+	 * @return array<string, string>
 	 */
-	function call_checksum_api() {
+	function call_checksum_api() : array {
 		// Setup variables.
 		$wpversion = \get_bloginfo( 'version' );
 		$wplocale  = \get_locale();
@@ -65,7 +65,7 @@ class Files_Integrity extends Site_Health_Tool {
 		$checksums = \get_core_checksums( $wpversion, $wplocale );
 
 		if ( false === $checksums ) {
-			return $checksums;
+			return array();
 		}
 
 		\set_transient( 'site-health-checksums', $checksums, 2 * HOUR_IN_SECONDS );
@@ -87,14 +87,14 @@ class Files_Integrity extends Site_Health_Tool {
 	 * @uses md5_file()
 	 * @uses ABSPATH
 	 *
-	 * @param array $checksums
+	 * @param array<string, string> $checksums
 	 *
-	 * @return array|bool
+	 * @return array<int, array<int, string>>
 	 */
-	function parse_checksum_results( $checksums ) {
+	function parse_checksum_results( array $checksums ) : array {
 		// Check if the checksums are valid
-		if ( false === $checksums ) {
-			return false;
+		if ( empty( $checksums ) ) {
+			return array();
 		}
 
 		$filepath = ABSPATH;
@@ -132,7 +132,7 @@ class Files_Integrity extends Site_Health_Tool {
 					$iterator = new \DirectoryIterator( $directory );
 					foreach ( $iterator as $file ) {
 						if ( $file->isFile() ) {
-							$path = str_replace( ABSPATH, '', $file->getPathname() );
+							$path = (string) str_replace( ABSPATH, '', $file->getPathname() );
 
 							if ( ! isset( $checksums[ $path ] ) && ! in_array( $path, $excluded_files, true ) ) {
 								$reason = \esc_html__( 'This is an unknown file', 'site-health-tools' );
@@ -144,7 +144,7 @@ class Files_Integrity extends Site_Health_Tool {
 					$iterator = new \RecursiveIteratorIterator( new \RecursiveDirectoryIterator( $directory ) );
 					foreach ( $iterator as $file ) {
 						if ( $file->isFile() ) {
-							$path = str_replace( ABSPATH, '', $file->getPathname() );
+							$path = (string) str_replace( ABSPATH, '', $file->getPathname() );
 
 							if ( ! isset( $checksums[ $path ] ) && ! in_array( $path, $excluded_files, true ) ) {
 								$reason = \esc_html__( 'This is an unknown file', 'site-health-tools' );
@@ -166,11 +166,11 @@ class Files_Integrity extends Site_Health_Tool {
 	 * @uses wp_die()
 	 * @uses ABSPATH
 	 *
-	 * @param null|array $files
+	 * @param array<int, array<int, string>> $files
 	 *
 	 * @return void
 	 */
-	function create_the_response( $files ) {
+	function create_the_response( array $files ) : void {
 		$filepath = ABSPATH;
 		$output   = '';
 
@@ -211,8 +211,6 @@ class Files_Integrity extends Site_Health_Tool {
 		);
 
 		\wp_send_json_success( $response );
-
-		\wp_die();
 	}
 
 	/**
@@ -254,7 +252,7 @@ class Files_Integrity extends Site_Health_Tool {
 			\wp_send_json_error( array( 'message' => \esc_html__( 'You do not have access to this file.', 'site-health-tools' ) ) );
 		}
 
-		$local_file_body  = file_get_contents( $filepath . $file_safe, FILE_USE_INCLUDE_PATH ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- `file_get_contents` used to retrieve contents of local file.
+		$local_file_body  = file_get_contents( $filepath . $file_safe, true ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- `file_get_contents` used to retrieve contents of local file.
 		$remote_file      = \wp_remote_get( 'https://core.svn.wordpress.org/tags/' . $wpversion . '/' . $file_safe );
 		$remote_file_body = \wp_remote_retrieve_body( $remote_file );
 		$diff_args        = array(
@@ -266,14 +264,12 @@ class Files_Integrity extends Site_Health_Tool {
 		$output  .= '</th><th>';
 		$output  .= \esc_html__( 'Modified', 'site-health-tools' );
 		$output  .= '</th></tr></table>';
-		$output  .= \wp_text_diff( $remote_file_body, $local_file_body, $diff_args );
+		$output  .= \wp_text_diff( (string) $remote_file_body, (string) $local_file_body, $diff_args );
 		$response = array(
 			'message' => $output,
 		);
 
 		\wp_send_json_success( $response );
-
-		\wp_die();
 	}
 
 	/**
@@ -281,7 +277,7 @@ class Files_Integrity extends Site_Health_Tool {
 	 *
 	 * @return void
 	 */
-	public function tab_content() {
+	public function tab_content() : void {
 		?>
 		<form action="#" id="site-health-file-integrity" method="POST">
 			<p>

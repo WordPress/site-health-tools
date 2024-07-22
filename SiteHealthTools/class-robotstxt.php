@@ -24,13 +24,13 @@ class Robotstxt extends Site_Health_Tool {
 		parent::__construct();
 	}
 
-	public function tab_content() {
+	public function tab_content() : void {
 		global $wp_rewrite;
 
 		if ( file_exists( ABSPATH . 'robots.txt' ) ) {
 			printf(
 				'<pre>%s</pre>',
-				\esc_html( file_get_contents( ABSPATH . 'robots.txt' ) )
+				\esc_html( (string) file_get_contents( ABSPATH . 'robots.txt' ) )
 			);
 		} else {
 			printf(

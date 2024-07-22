@@ -53,7 +53,7 @@ class Phpinfo extends Site_Health_Tool {
 	 *
 	 * @return void
 	 */
-	public function tab_content() {
+	public function tab_content() : void {
 		// If the host has disabled `phpinfo()`, do not offer a button alternative.
 		if ( ! function_exists( 'phpinfo' ) ) {
 			return;
