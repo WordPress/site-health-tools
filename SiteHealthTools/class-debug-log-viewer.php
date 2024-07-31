@@ -30,7 +30,8 @@ class Debug_Log_Viewer extends Site_Health_Tool {
 			return '';
 		}
 
-		$debug_log = @file_get_contents( $logfile ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- `file_get_contents` used to retrieve contents of local file.
+//		$debug_log = @file_get_contents( $logfile, offset: -1024 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- `file_get_contents` used to retrieve contents of local file.
+		$debug_log = $this->tail( $logfile, 99 ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- `file_get_contents` used to retrieve contents of local file.
 
 		if ( false === $debug_log ) {
 			return sprintf(
@@ -80,6 +81,70 @@ class Debug_Log_Viewer extends Site_Health_Tool {
 				\esc_textarea( $this->read_debug_log() )
 			);
 		}
+	}
+
+	/**
+	 * Slightly modified version of http://www.geekality.net/2011/05/28/php-tail-tackling-large-files/
+	 * Modified and modernized, refactored for OOP from the version at https://gist.github.com/lorenzos/1711e81a9162320fde20
+	 * @author Torleif Berger, Lorenzo Stanco, Knut Sparhell (2024)
+	 * @link http://stackoverflow.com/a/15025877/995958
+	 * @license http://creativecommons.org/licenses/by/3.0/
+	 */
+	private function tail( /*string */$filepath, /*int */$lines = 1, /*bool */$adaptive = true )/*: bool|string*/ {
+
+		// Open file
+		$f = @fopen( $filepath, 'rb' );
+		if ( $f === false ) return false;
+
+		// Sets buffer size, according to the number of lines to retrieve.
+		// This gives a performance boost when reading a few lines from the file.
+		if ( ! $adaptive ) $buffer = 4096;
+		else $buffer = $lines < 2 ? 64 : ( $lines < 10 ? 512 : 4096 );
+
+		// Jump to last character
+		fseek( $f, -1, \SEEK_END ) ;
+
+		// Read it and adjust line number if necessary
+		// (Otherwise the result would be wrong if file doesn't end with a blank line)
+		if ( fread( $f, 1 ) != \PHP_EOL ) $lines -= 1;
+
+		// Start reading
+		$output = '';
+		$chunk  = '';
+
+		// While we would like more
+		while ( ftell( $f ) > 0 && $lines >= 0 ) {
+
+			// Figure out how far back we should jump
+			$seek = min( ftell( $f ), $buffer );
+
+			// Do the jump (backwards, relative to where we are)
+			fseek( $f, -$seek, \SEEK_CUR );
+
+			// Read a chunk and prepend it to our output
+			$output = ( $chunk = fread( $f, $seek ) ) . $output;
+
+			// Jump back to where we started reading
+			fseek( $f, -mb_strlen( $chunk, '8bit' ), \SEEK_CUR );
+
+			// Decrease our line counter
+			$lines -= substr_count( $chunk, \PHP_EOL );
+
+		}
+
+		// While we have too many lines
+		// (Because of buffer size we might have read too many)
+		while ( $lines++ < 0 ) {
+
+			// Find first newline and remove all text before that
+			$output = substr( $output, strpos( $output, \PHP_EOL ) + 1 );
+
+		}
+
+		// Close file and return
+		fclose( $f );
+		return trim( $output );
+
 	}
 }
 
