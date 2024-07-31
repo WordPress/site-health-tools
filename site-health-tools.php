@@ -55,7 +55,7 @@ function add_tools_tab( array $tabs ) : array {
 	return array_merge(
 		$tabs,
 		array(
-			'tools' => \esc_html__( 'Tools', 'health-check' ),
+			'tools' => \esc_html__( 'Tools', 'site-health-tools' ),
 		)
 	);
 }
