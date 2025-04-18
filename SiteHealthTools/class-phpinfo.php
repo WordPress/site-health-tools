@@ -18,6 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Phpinfo extends Site_Health_Tool {
 
 	public function __construct() {
+		\add_action( 'site_health_tab_content', array( $this, 'add_site_health_tab_content' ) );
+
+		parent::__construct();
+	}
+
+	protected function set_tool_details() {
 		$this->label = \__( 'PHP Info', 'site-health-tools' );
 
 		if ( ! function_exists( 'phpinfo' ) ) {
@@ -25,10 +31,6 @@ class Phpinfo extends Site_Health_Tool {
 		} else {
 			$this->description = \__( 'Some scenarios require you to look up more detailed server configurations than what is normally required. The PHP Info page allows you to view all available configuration options for your PHP setup. Please be advised that WordPress does not guarantee that any information shown on that page may not be considered sensitive.', 'site-health-tools' );
 		}
-
-		\add_action( 'site_health_tab_content', array( $this, 'add_site_health_tab_content' ) );
-
-		parent::__construct();
 	}
 
 	/**

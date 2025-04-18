@@ -5,16 +5,18 @@ namespace SiteHealthTools;
 class Plugin_Compatibility extends Site_Health_Tool {
 
 	public function __construct() {
+		\add_action( 'rest_api_init', array( $this, 'register_plugin_compat_rest_route' ) );
+
+		parent::__construct();
+	}
+
+	protected function set_tool_details() {
 		$this->label       = \__( 'Plugin compatibility', 'site-health-tools' );
 		$this->description = sprintf(
 			'%s<br>%s',
 			\__( 'Attempt to identify the compatibility of your plugins before upgrading PHP, note that a compatibility check may not always be accurate, and you may want to contact the plugin author to confirm that things will continue working.', 'site-health-tools' ),
 			\__( 'The compatibility check will need to send requests to the <a href="https://wptide.org">WPTide</a> project to fetch the test results for each of your plugins.', 'site-health-tools' )
 		);
-
-		\add_action( 'rest_api_init', array( $this, 'register_plugin_compat_rest_route' ) );
-
-		parent::__construct();
 	}
 
 	public function register_plugin_compat_rest_route() : void {

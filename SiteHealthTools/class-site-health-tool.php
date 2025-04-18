@@ -32,7 +32,11 @@ abstract class Site_Health_Tool {
 
 	public function __construct() {
 		\add_filter( 'health_check_tools_tab', array( $this, 'tab_setup' ) );
+
+		\add_action( 'init', array( $this, 'set_tool_details' ) );
 	}
+
+	abstract protected function set_tool_details();
 
 	/**
 	 * @param array<int, array<string,string>> $tabs

@@ -18,10 +18,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Robotstxt extends Site_Health_Tool {
 
 	public function __construct() {
+		parent::__construct();
+	}
+
+	protected function set_tool_details() {
 		$this->label       = \__( 'robots.txt Viewer', 'site-health-tools' );
 		$this->description = \__( 'The <code>robots.txt</code> file tells search engines which directories are allowed to be crawled and which not. WordPress generates a virtual file if there is no physical file. If there is a non-virtual file, the content will be displayed here.', 'site-health-tools' );
-
-		parent::__construct();
 	}
 
 	public function tab_content() : void {

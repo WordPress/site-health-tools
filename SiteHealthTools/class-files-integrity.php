@@ -19,13 +19,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Files_Integrity extends Site_Health_Tool {
 
 	public function __construct() {
-		$this->label       = \__( 'File integrity', 'site-health-tools' );
-		$this->description = \__( 'The File Integrity checks all the core files with the <code>checksums</code> provided by the WordPress API to see if they are intact. If there are changes you will be able to make a Diff between the files hosted on WordPress.org and your installation to see what has been changed.', 'site-health-tools' );
-
 		\add_action( 'wp_ajax_site-health-files-integrity-check', array( $this, 'run_files_integrity_check' ) );
 		\add_action( 'wp_ajax_site-health-view-file-diff', array( $this, 'view_file_diff' ) );
 
 		parent::__construct();
+	}
+
+	protected function set_tool_details() {
+		$this->label       = \__( 'File integrity', 'site-health-tools' );
+		$this->description = \__( 'The File Integrity checks all the core files with the <code>checksums</code> provided by the WordPress API to see if they are intact. If there are changes you will be able to make a Diff between the files hosted on WordPress.org and your installation to see what has been changed.', 'site-health-tools' );
 	}
 
 	/**

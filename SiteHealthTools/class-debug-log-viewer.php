@@ -5,10 +5,12 @@ namespace SiteHealthTools;
 class Debug_Log_Viewer extends Site_Health_Tool {
 
 	public function __construct() {
+		parent::__construct();
+	}
+
+	protected function set_tool_details() {
 		$this->label       = \__( 'Debug logs', 'site-health-tools' );
 		$this->description = \__( 'When configured, and enabled, this section will show you any errors or warnings that have been caused by code on your site.', 'site-health-tools' );
-
-		parent::__construct();
 	}
 
 	private function read_debug_log() : string {

@@ -25,12 +25,14 @@ class Mail_Check extends Site_Health_Tool {
 	private $mail_error = null;
 
 	public function __construct() {
-		$this->label       = \__( 'Mail Check', 'site-health-tools' );
-		$this->description = \__( 'The Mail Check will invoke the <code>wp_mail()</code> function and check if it succeeds. We will use the E-mail address you have set up, but you can change it below if you like.', 'site-health-tools' );
-
 		\add_action( 'wp_ajax_site-health-mail-check', array( $this, 'run_mail_check' ) );
 
 		parent::__construct();
+	}
+
+	protected function set_tool_details() {
+		$this->label       = \__( 'Mail Check', 'site-health-tools' );
+		$this->description = \__( 'The Mail Check will invoke the <code>wp_mail()</code> function and check if it succeeds. We will use the E-mail address you have set up, but you can change it below if you like.', 'site-health-tools' );
 	}
 
 	/**
