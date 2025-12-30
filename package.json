@@ -19,7 +19,7 @@
     "ts-node": "^10.9.2"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=24"
   },
   "license": "GPL-2.0+",
   "name": "site-health-tools",
