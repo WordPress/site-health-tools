@@ -1,3 +1,5 @@
+@use "sass:meta";
+
 body {
 
 	&.wp-admin.site-health-php { /* stylelint-disable-line selector-class-pattern -- The mix of separators is due to how WP core handles body classnames.  */
@@ -55,6 +57,6 @@ body {
 		}
 
 
-		@import "modules/diff-viewer";
+		@include meta.load-css("modules/diff-viewer");
 	}
 }
