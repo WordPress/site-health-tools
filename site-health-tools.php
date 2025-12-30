@@ -8,7 +8,7 @@
  * Plugin Name: Site Health Tools
  * Plugin URI: https://wordpress.org/plugins/site-health-tools/
  * Description: A plugin that adds tools to the Site Health page in WordPress.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Clorith
  * Requires PHP: 7.1
  * License: GPLv2

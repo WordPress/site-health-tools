@@ -3,8 +3,8 @@ Tags: health check, site health
 Contributors: Clorith
 Requires at least: 5.8
 Requires PHP: 7.1
-Tested up to: 6.6
-Stable tag: 1.0.0
+Tested up to: 6.9
+Stable tag: 1.0.1
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -44,5 +44,8 @@ Yes, the plugin is open source and available on the [WordPress/site-health-tools
 
 == Changelog ==
 
-= 1.0.0 (<date TBD>)
+= 1.0.1 (2025-12-30) =
+* Fixed: Translation warnings when using WordPress 6.7 or later.
+
+= 1.0.0 (2024-07-23)
 * Initial release
