@@ -21,7 +21,7 @@ class Htaccess extends Site_Health_Tool {
 		parent::__construct();
 	}
 
-	protected function set_tool_details() {
+	public function set_tool_details() {
 		$this->label       = \__( '.htaccess Viewer', 'site-health-tools' );
 		$this->description = \__( 'The <code>.htaccess</code> file tells your server (if supported) how to handle links and file requests. This file usually requires direct server access to view, but if your system supports these files, you can verify its content here.', 'site-health-tools' );
 	}

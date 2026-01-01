@@ -36,7 +36,7 @@ abstract class Site_Health_Tool {
 		\add_action( 'init', array( $this, 'set_tool_details' ) );
 	}
 
-	abstract protected function set_tool_details();
+	abstract public function set_tool_details();
 
 	/**
 	 * @param array<int, array<string,string>> $tabs
