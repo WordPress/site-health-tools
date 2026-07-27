@@ -26,7 +26,7 @@ class Htaccess extends Site_Health_Tool {
 		$this->description = \__( 'The <code>.htaccess</code> file tells your server (if supported) how to handle links and file requests. This file usually requires direct server access to view, but if your system supports these files, you can verify its content here.', 'site-health-tools' );
 	}
 
-	public function tab_content() : void {
+	public function tab_content(): void {
 		global $wp_rewrite;
 
 		if ( $wp_rewrite->using_mod_rewrite_permalinks() ) {
@@ -58,7 +58,6 @@ class Htaccess extends Site_Health_Tool {
 		?>
 		<?php
 	}
-
 }
 
 new Htaccess();

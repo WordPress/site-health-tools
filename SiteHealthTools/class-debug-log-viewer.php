@@ -13,7 +13,7 @@ class Debug_Log_Viewer extends Site_Health_Tool {
 		$this->description = \__( 'When configured, and enabled, this section will show you any errors or warnings that have been caused by code on your site.', 'site-health-tools' );
 	}
 
-	private function read_debug_log() : string {
+	private function read_debug_log(): string {
 		if ( ! defined( 'WP_DEBUG_LOG' ) || false === \WP_DEBUG_LOG ) {
 			return '';
 		}
@@ -45,7 +45,7 @@ class Debug_Log_Viewer extends Site_Health_Tool {
 		return $debug_log;
 	}
 
-	public function tab_content() : void {
+	public function tab_content(): void {
 		if ( ! defined( 'WP_DEBUG_LOG' ) || false === \WP_DEBUG_LOG ) {
 			printf(
 				'<p>%s</p>',

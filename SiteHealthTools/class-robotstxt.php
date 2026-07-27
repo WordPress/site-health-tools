@@ -26,7 +26,7 @@ class Robotstxt extends Site_Health_Tool {
 		$this->description = \__( 'The <code>robots.txt</code> file tells search engines which directories are allowed to be crawled and which not. WordPress generates a virtual file if there is no physical file. If there is a non-virtual file, the content will be displayed here.', 'site-health-tools' );
 	}
 
-	public function tab_content() : void {
+	public function tab_content(): void {
 		global $wp_rewrite;
 
 		if ( file_exists( ABSPATH . 'robots.txt' ) ) {
@@ -47,7 +47,6 @@ class Robotstxt extends Site_Health_Tool {
 		?>
 		<?php
 	}
-
 }
 
 new Robotstxt();

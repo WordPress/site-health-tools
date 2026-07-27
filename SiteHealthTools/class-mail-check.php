@@ -133,7 +133,7 @@ class Mail_Check extends Site_Health_Tool {
 	 *
 	 * @return void
 	 */
-	public function tab_content() : void {
+	public function tab_content(): void {
 		?>
 		<form action="#" id="site-health-mail-check" method="POST">
 			<table class="widefat tools-email-table">
