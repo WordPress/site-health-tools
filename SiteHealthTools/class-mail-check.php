@@ -30,7 +30,7 @@ class Mail_Check extends Site_Health_Tool {
 		parent::__construct();
 	}
 
-	public function set_tool_details() {
+	public function set_tool_details(): void {
 		$this->label       = \__( 'Mail Check', 'site-health-tools' );
 		$this->description = \__( 'The Mail Check will invoke the <code>wp_mail()</code> function and check if it succeeds. We will use the E-mail address you have set up, but you can change it below if you like.', 'site-health-tools' );
 	}
@@ -133,7 +133,7 @@ class Mail_Check extends Site_Health_Tool {
 	 *
 	 * @return void
 	 */
-	public function tab_content() : void {
+	public function tab_content(): void {
 		?>
 		<form action="#" id="site-health-mail-check" method="POST">
 			<table class="widefat tools-email-table">

@@ -10,7 +10,7 @@ class Plugin_Compatibility extends Site_Health_Tool {
 		parent::__construct();
 	}
 
-	public function set_tool_details() {
+	public function set_tool_details(): void {
 		$this->label       = \__( 'Plugin compatibility', 'site-health-tools' );
 		$this->description = sprintf(
 			'%s<br>%s',
@@ -19,21 +19,21 @@ class Plugin_Compatibility extends Site_Health_Tool {
 		);
 	}
 
-	public function register_plugin_compat_rest_route() : void {
+	public function register_plugin_compat_rest_route(): void {
 		\register_rest_route(
 			'site-health-tools/v1',
 			'plugin-compat',
 			array(
 				'methods'             => 'POST',
 				'callback'            => array( $this, 'check_plugin_version' ),
-				'permission_callback' => function() {
+				'permission_callback' => function () {
 					return \current_user_can( 'view_site_health_checks' );
 				},
 			)
 		);
 	}
 
-	public function tab_content() : void {
+	public function tab_content(): void {
 		?>
 		<table class="wp-list-table widefat fixed striped" id="site-health-tool-plugin-compat-list">
 			<thead>
@@ -79,7 +79,7 @@ class Plugin_Compatibility extends Site_Health_Tool {
 	 *
 	 * @return \WP_Error|\WP_REST_Response
 	 */
-	function check_plugin_version( \WP_REST_Request $request ) {
+	public function check_plugin_version( \WP_REST_Request $request ) {
 		if ( ! $request->has_param( 'slug' ) || ! $request->has_param( 'version' ) ) {
 			return new \WP_Error( 'missing_arg', \__( 'The slug, or version, is missing from the request.', 'site-health-tools' ) );
 		}
@@ -105,7 +105,7 @@ class Plugin_Compatibility extends Site_Health_Tool {
 		return new \WP_REST_Response( $response, 200 );
 	}
 
-	function get_highest_supported_php( string $slug, string $version ) : string {
+	public function get_highest_supported_php( string $slug, string $version ): string {
 		$versions = $this->get_supported_php( $slug, $version );
 
 		if ( empty( $versions ) ) {
@@ -131,7 +131,7 @@ class Plugin_Compatibility extends Site_Health_Tool {
 	 *
 	 * @return array<int, string>
 	 */
-	function get_supported_php( string $slug, string $version ) : array {
+	public function get_supported_php( string $slug, string $version ): array {
 		// Clean up the slug, in case it's got more details
 		if ( stristr( $slug, '/' ) ) {
 			$parts = explode( '/', $slug );

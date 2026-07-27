@@ -63,5 +63,5 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<?php endforeach; ?>
 	</div>
 
-	<?php include_once( __DIR__ . '/diff-modal.php' ); ?>
+	<?php require_once __DIR__ . '/diff-modal.php'; ?>
 </div>

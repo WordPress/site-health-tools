@@ -23,7 +23,7 @@ class Phpinfo extends Site_Health_Tool {
 		parent::__construct();
 	}
 
-	public function set_tool_details() {
+	public function set_tool_details(): void {
 		$this->label = \__( 'PHP Info', 'site-health-tools' );
 
 		if ( ! function_exists( 'phpinfo' ) ) {
@@ -46,7 +46,7 @@ class Phpinfo extends Site_Health_Tool {
 		}
 
 		if ( 'phpinfo' === $tab ) {
-			include_once( SITE_HEALTH_TOOLS_PLUGIN_DIRECTORY . '/templates/phpinfo.php' );
+			include_once SITE_HEALTH_TOOLS_PLUGIN_DIRECTORY . '/templates/phpinfo.php';
 		}
 	}
 
@@ -55,7 +55,7 @@ class Phpinfo extends Site_Health_Tool {
 	 *
 	 * @return void
 	 */
-	public function tab_content() : void {
+	public function tab_content(): void {
 		// If the host has disabled `phpinfo()`, do not offer a button alternative.
 		if ( ! function_exists( 'phpinfo' ) ) {
 			return;

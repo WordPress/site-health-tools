@@ -51,7 +51,7 @@ foreach ( $tool_files as $tool_file ) {
  *
  * @return array<string, string>
  */
-function add_tools_tab( array $tabs ) : array {
+function add_tools_tab( array $tabs ): array {
 	return array_merge(
 		$tabs,
 		array(
@@ -67,12 +67,12 @@ function add_tools_tab( array $tabs ) : array {
  *
  * @return void
  */
-function add_tools_tab_content( string $tab ) : void {
+function add_tools_tab_content( string $tab ): void {
 	if ( 'tools' !== $tab ) {
 		return;
 	}
 
-	include_once( __DIR__ . '/templates/tools.php' );
+	include_once __DIR__ . '/templates/tools.php';
 }
 
 /**
@@ -80,7 +80,7 @@ function add_tools_tab_content( string $tab ) : void {
  *
  * @return void
  */
-function enqueue_scripts() : void {
+function enqueue_scripts(): void {
 	$screen = \get_current_screen();
 
 	if ( 'tools_page_site-health' !== $screen->id && 'site-health' !== $screen->id ) {

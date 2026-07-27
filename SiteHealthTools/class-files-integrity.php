@@ -25,7 +25,7 @@ class Files_Integrity extends Site_Health_Tool {
 		parent::__construct();
 	}
 
-	public function set_tool_details() {
+	public function set_tool_details(): void {
 		$this->label       = \__( 'File integrity', 'site-health-tools' );
 		$this->description = \__( 'The File Integrity checks all the core files with the <code>checksums</code> provided by the WordPress API to see if they are intact. If there are changes you will be able to make a Diff between the files hosted on WordPress.org and your installation to see what has been changed.', 'site-health-tools' );
 	}
@@ -35,7 +35,7 @@ class Files_Integrity extends Site_Health_Tool {
 	 *
 	 * @return void
 	 */
-	function run_files_integrity_check() {
+	public function run_files_integrity_check() {
 		\check_ajax_referer( 'site-health-files-integrity-check' );
 
 		$checksums = $this->call_checksum_api();
@@ -58,7 +58,7 @@ class Files_Integrity extends Site_Health_Tool {
 	 *
 	 * @return array<string, string>
 	 */
-	function call_checksum_api() : array {
+	public function call_checksum_api(): array {
 		// Setup variables.
 		$wpversion = \get_bloginfo( 'version' );
 		$wplocale  = \get_locale();
@@ -93,7 +93,7 @@ class Files_Integrity extends Site_Health_Tool {
 	 *
 	 * @return array<int, array<int, string>>
 	 */
-	function parse_checksum_results( array $checksums ) : array {
+	public function parse_checksum_results( array $checksums ): array {
 		// Check if the checksums are valid
 		if ( empty( $checksums ) ) {
 			return array();
@@ -172,7 +172,7 @@ class Files_Integrity extends Site_Health_Tool {
 	 *
 	 * @return void
 	 */
-	function create_the_response( array $files ) : void {
+	public function create_the_response( array $files ): void {
 		$filepath = ABSPATH;
 		$output   = '';
 
@@ -230,7 +230,7 @@ class Files_Integrity extends Site_Health_Tool {
 	 *
 	 * @return void
 	 */
-	function view_file_diff() {
+	public function view_file_diff() {
 		\check_ajax_referer( 'site-health-view-file-diff' );
 
 		if ( ! \current_user_can( 'view_site_health_checks' ) ) {
@@ -279,7 +279,7 @@ class Files_Integrity extends Site_Health_Tool {
 	 *
 	 * @return void
 	 */
-	public function tab_content() : void {
+	public function tab_content(): void {
 		?>
 		<form action="#" id="site-health-file-integrity" method="POST">
 			<p>

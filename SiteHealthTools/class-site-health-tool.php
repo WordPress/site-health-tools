@@ -36,14 +36,14 @@ abstract class Site_Health_Tool {
 		\add_action( 'init', array( $this, 'set_tool_details' ) );
 	}
 
-	abstract public function set_tool_details();
+	abstract public function set_tool_details(): void;
 
 	/**
 	 * @param array<int, array<string,string>> $tabs
 	 *
 	 * @return array<int, array<string,string>>
 	 */
-	public function tab_setup( array $tabs ) : array {
+	public function tab_setup( array $tabs ): array {
 		if ( empty( $this->label ) ) {
 			return $tabs;
 		}
@@ -75,13 +75,13 @@ abstract class Site_Health_Tool {
 		return $tabs;
 	}
 
-	public function tab_content() : void {}
+	public function tab_content(): void {}
 
-	public function has_description() : bool {
+	public function has_description(): bool {
 		return ! empty( $this->description );
 	}
 
-	public function get_description() : string {
+	public function get_description(): string {
 		return $this->description;
 	}
 }
