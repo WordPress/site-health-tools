@@ -20,7 +20,7 @@ class Transients extends Site_Health_Tool {
 		parent::__construct();
 	}
 
-	public function set_tool_details() {
+	public function set_tool_details(): void {
 		$this->label       = \__( 'Transient summary', 'site-health-tools' );
 		$this->description = \__( 'Transients are temporary pieces of data, that is often requested, or gathered from third party sources, and stored in your website database to improve site performance. These pieces of data may over time become large and take up a lot of space, and can then be safely deleted, as their content is not critical to the functionality of your site.', 'site-health-tools' );
 	}

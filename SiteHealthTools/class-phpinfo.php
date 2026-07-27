@@ -23,7 +23,7 @@ class Phpinfo extends Site_Health_Tool {
 		parent::__construct();
 	}
 
-	public function set_tool_details() {
+	public function set_tool_details(): void {
 		$this->label = \__( 'PHP Info', 'site-health-tools' );
 
 		if ( ! function_exists( 'phpinfo' ) ) {

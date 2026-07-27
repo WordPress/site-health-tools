@@ -8,7 +8,7 @@ class Debug_Log_Viewer extends Site_Health_Tool {
 		parent::__construct();
 	}
 
-	public function set_tool_details() {
+	public function set_tool_details(): void {
 		$this->label       = \__( 'Debug logs', 'site-health-tools' );
 		$this->description = \__( 'When configured, and enabled, this section will show you any errors or warnings that have been caused by code on your site.', 'site-health-tools' );
 	}

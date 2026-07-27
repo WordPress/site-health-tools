@@ -10,7 +10,7 @@ class Plugin_Compatibility extends Site_Health_Tool {
 		parent::__construct();
 	}
 
-	public function set_tool_details() {
+	public function set_tool_details(): void {
 		$this->label       = \__( 'Plugin compatibility', 'site-health-tools' );
 		$this->description = sprintf(
 			'%s<br>%s',

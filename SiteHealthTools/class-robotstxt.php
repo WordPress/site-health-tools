@@ -21,7 +21,7 @@ class Robotstxt extends Site_Health_Tool {
 		parent::__construct();
 	}
 
-	public function set_tool_details() {
+	public function set_tool_details(): void {
 		$this->label       = \__( 'robots.txt Viewer', 'site-health-tools' );
 		$this->description = \__( 'The <code>robots.txt</code> file tells search engines which directories are allowed to be crawled and which not. WordPress generates a virtual file if there is no physical file. If there is a non-virtual file, the content will be displayed here.', 'site-health-tools' );
 	}
