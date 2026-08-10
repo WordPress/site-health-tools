@@ -47,7 +47,7 @@ jobs:
 
       - name: Start wp-env
         timeout-minutes: 10
-        run: npm run wp-env start
+        run: npm run wp-env start -- --config=.wp-env.ci-cd.json
 
       - name: Run test suite
         run: npm test
