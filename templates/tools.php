@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <div class="health-check-body">
 	<h2>
-		<?php esc_html_e( 'Tools', 'health-check' ); ?>
+		<?php esc_html_e( 'Tools', 'site-health-tools' ); ?>
 	</h2>
 
 	<div id="health-check-tools" role="presentation" class="health-check-accordion">
