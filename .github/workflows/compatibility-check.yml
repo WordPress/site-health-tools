@@ -1,0 +1,76 @@
+name: Compatibility Check
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-wp-versions:
+    name: WP ${{ matrix.wp }} / PHP ${{ matrix.php }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        wp: ['5.8', '5.9', '6.0', '6.1', '6.2', '6.3', '6.4', '6.5', '6.6', '6.7', '6.8', '6.9', '7.0']
+        php: ['7.1', '8.3']
+
+    env:
+      WP_ENV_CORE: https://wordpress.org/wordpress-${{ matrix.wp }}.zip
+      WP_ENV_PHP_VERSION: ${{ matrix.php }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Install NodeJS
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build plugin
+        run: npm run build
+
+      - name: Start wp-env
+        run: npm run wp-env start
+
+      - name: Run test suite
+        run: npm test
+
+  test-php-versions:
+    name: PHP ${{ matrix.php }} / WP 7.0 (latest)
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['7.1', '7.4', '8.0', '8.1', '8.2', '8.3']
+
+    env:
+      WP_ENV_CORE: https://wordpress.org/wordpress-7.0.zip
+      WP_ENV_PHP_VERSION: ${{ matrix.php }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Install NodeJS
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build plugin
+        run: npm run build
+
+      - name: Start wp-env
+        run: npm run wp-env start
+
+      - name: Run test suite
+        run: npm test

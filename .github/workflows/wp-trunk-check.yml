@@ -1,0 +1,45 @@
+name: WordPress Trunk Check
+
+# Continuously verifies the plugin's test suite against WordPress core trunk
+# (the nightly build), our stand-in for the not-yet-released 7.1 RC. Once 7.1
+# ships as a full release, delete this workflow and add '7.1' to
+# compatibility-check.yml's wp-versions matrix instead.
+
+on:
+  push:
+    branches:
+      - trunk
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  test-wp-trunk:
+    name: Test against WordPress trunk
+    runs-on: ubuntu-latest
+
+    env:
+      WP_ENV_CORE: https://wordpress.org/nightly-builds/wordpress-latest.zip
+      WP_ENV_PHP_VERSION: '8.3'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+
+      - name: Install NodeJS
+        uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Build plugin
+        run: npm run build
+
+      - name: Start wp-env
+        run: npm run wp-env start
+
+      - name: Run test suite
+        run: npm test
