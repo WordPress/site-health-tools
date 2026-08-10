@@ -3,7 +3,7 @@ Tags: health check, site health
 Contributors: Clorith
 Requires at least: 5.8
 Requires PHP: 7.1
-Tested up to: 6.9
+Tested up to: 7.1
 Stable tag: 1.0.1
 License: GPLv2
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
