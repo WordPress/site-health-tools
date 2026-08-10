@@ -19,6 +19,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      PLAYWRIGHT_REUSE_EXISTING_SERVER: 'true'
       WP_ENV_CORE: https://wordpress.org/nightly-builds/wordpress-latest.zip
       WP_ENV_PHP_VERSION: '8.3'
 
@@ -40,6 +41,10 @@ jobs:
 
       - name: Build plugin
         run: npm run build
+
+      - name: Start wp-env
+        timeout-minutes: 10
+        run: npm run wp-env start
 
       - name: Run test suite
         run: npm test

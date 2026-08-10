@@ -1,6 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 import { AUTH_FILE } from './e2e/common';
 
+const reuseExistingServer =
+	process.env.PLAYWRIGHT_REUSE_EXISTING_SERVER === 'true';
+
 /**
  * Read environment variables from file.
  * https://github.com/motdotla/dotenv
@@ -80,6 +83,7 @@ export default defineConfig({
   webServer: {
     command: 'npm run wp-env start',
     url: 'http://localhost:8889',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: reuseExistingServer || !process.env.CI,
+    timeout: 10 * 60 * 1000,
   },
 });
