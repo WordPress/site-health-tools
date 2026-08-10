@@ -45,9 +45,12 @@ jobs:
       - name: Build plugin
         run: npm run build
 
+      - name: Prepare CI wp-env override
+        run: printf '%s\n' '{"plugins":["."]}' > .wp-env.override.json
+
       - name: Start wp-env
         timeout-minutes: 10
-        run: npm run wp-env start -- --config=.wp-env.ci-cd.json
+        run: npm run wp-env start
 
       - name: Run test suite
         run: npm test
