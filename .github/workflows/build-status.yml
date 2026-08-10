@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - trunk
+    paths-ignore:
+      - '**/*.md'
+      - 'readme.txt'
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
