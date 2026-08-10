@@ -1,10 +1,7 @@
-import { test, expect } from '@playwright/test';
-import { signIn } from "../common";
+import { test, expect } from '../common';
 
 test( 'Validate the existence of a functional PHP Info tab', async ( { page } ) => {
 	const sectionSlug = 'php-info';
-
-	await signIn( { page } );
 
 	await page.goto( '/wp-admin/site-health.php?tab=tools' );
 

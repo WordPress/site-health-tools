@@ -1,4 +1,5 @@
 import { defineConfig, devices } from '@playwright/test';
+import { AUTH_FILE } from './e2e/common';
 
 /**
  * Read environment variables from file.
@@ -12,6 +13,9 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './e2e',
+  /* Clear/read the WordPress debug log around the run to catch PHP warnings from the plugin. */
+  globalSetup: require.resolve('./e2e/global-setup.ts'),
+  globalTeardown: require.resolve('./e2e/global-teardown.ts'),
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -34,13 +38,21 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      /* Signs in once per run and saves the session for the other projects. */
+      name: 'setup',
+      testMatch: /auth\.setup\.ts/,
+    },
+
+    {
       name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
+      use: { ...devices['Desktop Chrome'], storageState: AUTH_FILE },
+      dependencies: [ 'setup' ],
     },
 
     {
       name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
+      use: { ...devices['Desktop Firefox'], storageState: AUTH_FILE },
+      dependencies: [ 'setup' ],
     },
 
     /* Test against mobile viewports. */
