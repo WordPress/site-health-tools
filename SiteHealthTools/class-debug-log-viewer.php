@@ -32,7 +32,16 @@ class Debug_Log_Viewer extends Site_Health_Tool {
 			return '';
 		}
 
-		$debug_log = @file_get_contents( $logfile ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- `file_get_contents` used to retrieve contents of local file.
+		if ( ! is_readable( $logfile ) ) {
+			return sprintf(
+				// translators: %s: The path to the debug log file.
+				__( 'The debug log file found at `%s`, could not be read.', 'site-health-tools' ),
+				$logfile
+			);
+		}
+
+		// Only read the last 200k of the log file to avoid out of memory errors.
+		$debug_log = file_get_contents( $logfile, null, null, max( 0, filesize( $logfile ) - 200000 ) ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- `file_get_contents` used to retrieve contents of local file.
 
 		if ( false === $debug_log ) {
 			return sprintf(
